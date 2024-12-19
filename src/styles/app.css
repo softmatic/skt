@@ -1,0 +1,54 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+h1 {
+	font-size: 24pt;
+	font-weight: bold;
+}
+
+h2 {
+	font-size: 16pt;
+	font-weight: bold;
+}
+
+h3 {
+	font-size: 14pt;
+	font-weight: 400;
+}
+
+.hide-xs {
+	display: block;
+}
+
+.hide-sm {
+	display: none;
+}
+
+@media only screen and (min-width: 640px) {
+	h1 {
+		font-size: 36pt;
+		font-weight: 600;
+	}
+
+	h2 {
+		font-size: 24pt;
+		font-weight: 500;
+	}
+
+	h3 {
+		font-size: 16pt;
+		font-weight: 400;
+	}
+	.hide-xs {
+		display: none;
+	}
+	.hide-sm {
+		display: block;
+	}
+}
+
+li > * {
+	display: inline-block;
+	vertical-align: middle;
+}
