@@ -153,6 +153,6 @@ MIT.
 
 [SKT SvelteKit Saas Boilerplate App](https://softmatic.com/images/skt/screen_04.png)
 
-[SKT SvelteKit Saas Boilerplate Profile](https://softmatic.com/images/skt/screen_05.png)
+[SKT SvelteKit Saas Boilerplate Profile](https://softmatic.com/images/skt/screen_06.png)
 
-[SKT SvelteKit Saas Boilerplate Dark Mode](https://softmatic.com/images/skt/screen_06.png)
+[SKT SvelteKit Saas Boilerplate Dark Mode](https://softmatic.com/images/skt/screen_05.png)
