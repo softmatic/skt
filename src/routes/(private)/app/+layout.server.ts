@@ -6,7 +6,6 @@ export const load: LayoutServerLoad = async ({
 	locals: { safeGetSession, supabase, supabaseServiceRole },
 	cookies
 }) => {
-	console.log('LL');
 	const { session } = await safeGetSession();
 	const { data: profile } = await supabase
 		.from('profiles')
