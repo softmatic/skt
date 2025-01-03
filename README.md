@@ -103,7 +103,7 @@ The data will be pulled from the table and properly formatted. The relevant code
 
 ### Stripe Webhooks
 
-SKT integrates Stripe's embedded checkout (see <code>$src/routes/(public)/(subscription)checkout</code>). Once the payment is completed, Stripe's plugin redirects to <code>$src/routes/(public)/(subscription)/subscribed</code>. The code then updates the "Users" table and simply shows a Thank you-note, redirecting the new subscriber to the private section of the site. When a registered user accesses the private section, the code in <code>$src/routes/(private)/app/+layout.server.ts</code> checks with Stripe if the subscription is still active and updates the status accordingly. It's up to you to handle status changes, e.g. to restrict features of your app when a subscription has been deleted or is past due.
+SKT integrates Stripe's embedded checkout (see <code>$src/routes/(public)/(subscription)/checkout</code>). Once the payment is completed, Stripe's plugin redirects to <code>$src/routes/(public)/(subscription)/subscribed</code>. The code then updates the "Users" table and simply shows a Thank you-note, redirecting the new subscriber to the private section of the site. When a registered user accesses the private section, the code in <code>$src/routes/(private)/app/+layout.server.ts</code> checks with Stripe if the subscription is still active and updates the status accordingly. It's up to you to handle status changes, e.g. to restrict features of your app when a subscription has been deleted or is past due.
 
 In this scenario, webhooks are not required. However, it can be useful to capture additional Stripe subscription events via webhooks. Enable webhooks in the Stripe dashboard and select the events you are interested in. Make a note of the webhook's secret ("whsec...") and add it to <code>.env.local</code>. You will have to provide a publicly accessible URL as a destination. The webhook endpoint sits at <code>$src/routes/(admin)/webhooks/stripe</code>. When live on the web the destination URL would be example.com/webhooks/stripe. In development on localhost, you will need a service like ngrok to make this URL available to the outside.
 
@@ -119,9 +119,18 @@ npm run dev
 
 Then, in your browser, navigate to http://localhost:5173.
 
-## Deployment
+## Building & Deployment
 
-The project assumes deployment on a self-hosted platform, e.g. a server on the Hetzner cloud. For deployment follow this [guide](https://svelte.dev/docs/kit/adapter-node).
+We assume deploying on a self-hosting platform, e.g. a server on the Hetzner cloud. Briefly, deployment involves the following steps:
+
+1. Log into your server
+2. Make sure you have recent versions of NodeJS, pm2 and nginx (or any other webserver that can act as a reverse proxy)
+3. Setup nginx as a reverse proxy for outside access, [example](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-22-04)
+4. Clone the repo
+5. cd into the repo and create a file <code>.env</code> with the keys from <code>.env.local</code>
+6. Run <code>npm run build</code>
+7. cd into the <code>build</code> folder and run <code>pm2 start index.js</code>
+8. Verify with <code>curl http://localhost:3000</code> that the server is running, check for errors with <code>pm2 log</code>
 
 ## Credits
 
