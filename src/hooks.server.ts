@@ -44,6 +44,15 @@ const supabase: Handle = async ({ event, resolve }) => {
 		{ auth: { persistSession: false } }
 	);
 
+	if ('suppressGetSessionWarning' in event.locals.supabaseServiceRole.auth) {
+		// @ts-expect-error - suppressGetSessionWarning is not part of the official API
+		event.locals.supabaseServiceRole.auth.suppressGetSessionWarning = true;
+	} else {
+		console.warn(
+			'SupabaseAuthClient#suppressGetSessionWarning was removed. See https://github.com/supabase/auth-js/issues/888.'
+		);
+	}
+
 	event.locals.safeGetSession = async () => {
 		const {
 			data: { session }
