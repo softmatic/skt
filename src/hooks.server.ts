@@ -27,6 +27,15 @@ const supabase: Handle = async ({ event, resolve }) => {
 		}
 	});
 
+	if ('suppressGetSessionWarning' in event.locals.supabase.auth) {
+		// @ts-expect-error - suppressGetSessionWarning is not part of the official API
+		event.locals.supabase.auth.suppressGetSessionWarning = true;
+	} else {
+		console.warn(
+			'SupabaseAuthClient#suppressGetSessionWarning was removed. See https://github.com/supabase/auth-js/issues/888.'
+		);
+	}
+
 	// NOTE: Need this for account maintenance
 
 	event.locals.supabaseServiceRole = createClient(
