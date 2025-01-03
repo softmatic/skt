@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-	<title>SKT Title</title>
+	<title>SKT - The Sveltekit Boilerplate</title>
 </svelte:head>
 
 <div class="grow flex flex-col bg-gray-50 dark:bg-gray-900">
