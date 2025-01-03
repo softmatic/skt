@@ -117,6 +117,10 @@ npm run dev
 
 Then, in your browser, navigate to http://localhost:5173.
 
+## Deployment
+
+The project assumes deployment on a self-hosted platform, e.g. a server on the Hetzner cloud. For deployment follow this [guide](https://svelte.dev/docs/kit/adapter-node).
+
 ## Credits
 
 ### Svelte

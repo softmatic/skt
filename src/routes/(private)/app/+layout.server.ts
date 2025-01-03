@@ -20,7 +20,7 @@ export const load: LayoutServerLoad = async ({
 		.single();
 
 	let subscriptionStatus: SubscriptionStatus | undefined = undefined;
-	if (error == null && data.stripe_subscriptionid) {
+	if (data.stripe_subscriptionid) {
 		subscriptionStatus = await StripeService.getSubscriptionStatus(data.stripe_subscriptionid);
 		if (subscriptionStatus) {
 			const { error } = await supabaseServiceRole
@@ -35,7 +35,9 @@ export const load: LayoutServerLoad = async ({
 			}
 		}
 	} else {
-		console.error(error);
+		if (error) {
+			console.error(error);
+		}
 	}
 	return {
 		session,
