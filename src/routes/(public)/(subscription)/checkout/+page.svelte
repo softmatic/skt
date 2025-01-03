@@ -26,6 +26,10 @@
 	});
 </script>
 
+<svelte:head>
+	<title>Checkout</title>
+</svelte:head>
+
 <div class="flex items-center justify-center min-h-screen py-12">
 	<div class="p-8 rounded-lg shadow-xl">
 		<div id="checkout"></div>

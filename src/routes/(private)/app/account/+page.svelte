@@ -53,6 +53,10 @@
 	};
 </script>
 
+<svelte:head>
+	<title>Account</title>
+</svelte:head>
+
 <div class="flex flex-col m-auto grow p-4 space-y-4 sm:space-y-6 sm:p-8">
 	<div class="card w-72 sm:w-96 bg-base-100 shadow-xl">
 		<div class="card-body">

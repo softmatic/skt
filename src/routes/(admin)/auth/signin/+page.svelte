@@ -36,6 +36,10 @@
 	};
 </script>
 
+<svelte:head>
+	<title>Sign in</title>
+</svelte:head>
+
 <div class="card w-72 sm:w-96 bg-base-100 shadow-xl">
 	<div class="card-body">
 		<h2 class="card-title text-2xl font-bold mb-6">Sign in</h2>

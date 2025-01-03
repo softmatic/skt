@@ -7,6 +7,10 @@
 	let { status, session } = $derived(data);
 </script>
 
+<svelte:head>
+	<title>Pricing</title>
+</svelte:head>
+
 <div class="flex flex-col grow items-center bg-gray-50 dark:bg-gray-900">
 	<div>
 		<div class="m-auto text-center space-y-4">

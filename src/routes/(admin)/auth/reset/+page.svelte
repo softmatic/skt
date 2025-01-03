@@ -14,6 +14,10 @@
 	};
 </script>
 
+<svelte:head>
+	<title>Reset password</title>
+</svelte:head>
+
 <div class="flex grow bg-gray-50 dark:bg-gray-900">
 	<div class="m-auto">
 		<div class="card w-72 sm:w-96 bg-base-100 shadow-xl">
