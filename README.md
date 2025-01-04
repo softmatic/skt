@@ -160,6 +160,10 @@ We assume deploying on a self-hosting platform, e.g. a server on the Hetzner clo
 10. Run <code>docker run -p 3000:3000 $DOCKER_ACCOUNT_NAME/skt:v0.1</code>
 11. Access your domain via a webbrowser
 
+#### Using Github Actions to build and push the Docker image
+
+A sample workflow is provided in <code>.github/worklows</code>. You will have to provide your docker username and a PAT (personal access token). Note that this workflow builds for arm64 as this is the architecture of the [Datada.sh](https://datada.sh) server. Also, the build action expects an .env file with all data filled in. Only use this action on a private repo or change to dynamic environment variables.
+
 ## Credits
 
 ### Svelte
