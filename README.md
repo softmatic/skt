@@ -152,7 +152,7 @@ We assume deploying on a self-hosting platform, e.g. a server on the Hetzner clo
 2. run <code>npm run build</code>
 3. Log into your docker account and build the image with <code>docker build -t $DOCKER_ACCOUNT_NAME/skt:v0.1 .</code> (or any other tag name)
 4. Push to the Docker hub with <code>docker push $DOCKER_ACCOUNT_NAME/skt:v0.1</code> or use Docker desktop
-5. On Docker.io, verify that the image is listed. **NOTE**: You will want to set the repo to private, as the container contains your Stripe keys and other sensitive data. Consider switching to dynamic environment variables for a public repo
+5. On Docker.io, verify that the image is listed. **NOTE**: You will want to set the repo to private, as the container contains your Stripe keys and other sensitive data. Consider switching to dynamic environment variables for a public repo, [tutorial](https://khromov.se/dockerizing-your-sveltekit-applications-a-practical-guide/)
 6. Log into your server
 7. Make sure you have recent versions of Docker and nginx (or any other webserver that can act as a reverse proxy)
 8. Setup nginx as a reverse proxy for outside access, [tutorial](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-22-04), also a sample configuration file is provided in the <code>nginx</code> folder
