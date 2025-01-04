@@ -3,6 +3,8 @@
 	import '$src/styles/app.css';
 	import '$src/styles/google.css';
 
+	import { PUBLIC_SUPABASE_REDIRECT_URL } from '$env/static/public';
+
 	import GoogleIcon from '$lib/icons/Google.svelte?raw';
 	import EnvelopeIcon from '$lib/icons/Envelope.svelte?raw';
 	import KeyIcon from '$lib/icons/Key.svelte?raw';
@@ -16,7 +18,7 @@
 			provider: 'google',
 			options: {
 				// NOTE: Must match setting in Supabase Redirect URLs exactly or it will go to "/"
-				redirectTo: 'http://localhost:5173/auth/callback'
+				redirectTo: PUBLIC_SUPABASE_REDIRECT_URL
 			}
 		});
 	};

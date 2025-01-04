@@ -28,6 +28,7 @@ PUBLIC_PROJECT = 'Your Projects Name'
 PUBLIC_SUPABASE_URL = 'https://YOURPROJECT.supabase.co'
 PUBLIC_SUPABASE_ANON_KEY = ''
 PRIVATE_SUPABASE_SERVICE_ROLE = ''
+PUBLIC_SUPABASE_REDIRECT_URL = 'https://localhost:5173/auth/callback'
 
 # Stripe
 
@@ -149,16 +150,15 @@ We assume deploying on a self-hosting platform, e.g. a server on the Hetzner clo
 
 1. On your development machine, cd into the repo and create a file <code>.env</code> with the keys from <code>.env.local</code>, adjusted for production
 2. run <code>npm run build</code>
-3. cd into the <code>build</code> folder
-4. Log into your docker account and build the image with <code>docker build -t $DOCKER_ACCOUNT_NAME/skt:v0.1 .</code> (or any other tag name)
-5. Push to the Docker hub with <code>docker push $DOCKER_ACCOUNT_NAME/skt:v0.1</code> or use Docker desktop
-6. On Docker.io, verify that the image is listed. **NOTE**: You will want to set the repo to private, as the container contains your Stripe keys and other sensitive data. Consider switching to dynamic environment variables for a public repo
-7. Log into your server
-8. Make sure you have recent versions of Docker and nginx (or any other webserver that can act as a reverse proxy)
-9. Setup nginx as a reverse proxy for outside access, [tutorial](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-22-04), also a sample configuration file is provided in the <code>nginx</code> folder
-10. **TIP:** To avoid having to use sudo for Docker commands, add your user account to the <code>docker</code> group: <code>sudo usermod -aG docker $YOUR_USERNAME</code>
-11. Run <code>docker run -p 3000:3000 $DOCKER_ACCOUNT_NAME/skt:v0.1</code>
-12. Access your domain via a webbrowser
+3. Log into your docker account and build the image with <code>docker build -t $DOCKER_ACCOUNT_NAME/skt:v0.1 .</code> (or any other tag name)
+4. Push to the Docker hub with <code>docker push $DOCKER_ACCOUNT_NAME/skt:v0.1</code> or use Docker desktop
+5. On Docker.io, verify that the image is listed. **NOTE**: You will want to set the repo to private, as the container contains your Stripe keys and other sensitive data. Consider switching to dynamic environment variables for a public repo
+6. Log into your server
+7. Make sure you have recent versions of Docker and nginx (or any other webserver that can act as a reverse proxy)
+8. Setup nginx as a reverse proxy for outside access, [tutorial](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-22-04), also a sample configuration file is provided in the <code>nginx</code> folder
+9. **TIP:** To avoid having to use sudo for Docker commands, add your user account to the <code>docker</code> group: <code>sudo usermod -aG docker $YOUR_USERNAME</code>
+10. Run <code>docker run -p 3000:3000 $DOCKER_ACCOUNT_NAME/skt:v0.1</code>
+11. Access your domain via a webbrowser
 
 ## Credits
 
