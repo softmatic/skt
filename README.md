@@ -46,6 +46,8 @@ Create a project in Supabase and make a note of the project URL and keys; you wi
 
 Currently supported is signing up per email / password and Google OAuth. Enable both providers in Supabase > Authentication > Providers. In SKT, all relevant code resides in <code>$src/routes/(admin)/auth</code>.
 
+In Supabase > Authentication > URL Configuration, set the Site URL to <code>http://localhost:5173</code> and the Redirect URL to <code>http://localhost:5173/auth/callback</code>.
+
 ### Email / Password auth
 
 For email leave everything at defaults (disabling "Confirm email" speeds things up during development). Note that changing the user's email is currently not supported.
@@ -63,7 +65,7 @@ In Google Cloud, setup a project, then navigate to Google Auth Platform and clic
 3. Provide a contact email and agree to TOS
 4. In the sidebar, select "Clients" and click "Create Client"
 5. For application type, select "Web application" and give it a name
-6. In "Authorized JS origins", enter http://localhost (in production also add your real domain)
+6. In "Authorized JS origins", enter http://localhost (in production also add your real domain to the list)
 7. In "Authorized redirect URIs", enter the callback URL. It will be of the form https://YOURPROJECT.supabase.co/auth/v1/callback
 8. Click "Create".
 9. The client will now be listed. Click it to open the configuration and make a note of the "ClientID" and the "Client secret"
@@ -119,18 +121,44 @@ npm run dev
 
 Then, in your browser, navigate to http://localhost:5173.
 
-## Building & Deployment
+## Building & Deployment of the SvelteKit Boilerplate
 
-We assume deploying on a self-hosting platform, e.g. a server on the Hetzner cloud. Briefly, deployment involves the following steps:
+Before going into production, make sure to change all references to localhost and test data to production values:
+
+1. Change Supabase > Authentication > URL Configuration accordingly
+2. Change Stripe PUBLIC_DOMAIN in .env, replace test API keys, webhook secrets and product / price IDs
+3. Add domain to "Authorized JS origins" in Google Auth
+
+We assume deploying on a self-hosting platform, e.g. a server on the Hetzner cloud or with Digital Ocean:
+
+### Using PM2
 
 1. Log into your server
 2. Make sure you have recent versions of NodeJS, pm2 and nginx (or any other webserver that can act as a reverse proxy)
-3. Setup nginx as a reverse proxy for outside access, [example](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-22-04)
+3. Setup nginx as a reverse proxy for outside access, [tutorial](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-22-04), also a sample configuration file is provided in the <code>nginx</code> folder
 4. Clone the repo
-5. cd into the repo and create a file <code>.env</code> with the keys from <code>.env.local</code>
+5. cd into the repo and create a file <code>.env</code> with the keys from <code>.env.local</code>, adjusted for production
 6. Run <code>npm run build</code>
 7. cd into the <code>build</code> folder and run <code>pm2 start index.js</code>
 8. Verify with <code>curl http://localhost:3000</code> that the server is running, check for errors with <code>pm2 log</code>
+9. Access your domain via a webbrowser
+
+### Using Docker
+
+**NOTE**: This workflow requires a Docker account, we assume a repo named 'skt'
+
+1. On your development machine, cd into the repo and create a file <code>.env</code> with the keys from <code>.env.local</code>, adjusted for production
+2. run <code>npm run build</code>
+3. cd into the <code>build</code> folder
+4. Log into your docker account and build the image with <code>docker build -t $DOCKER_ACCOUNT_NAME/skt:v0.1 .</code> (or any other tag name)
+5. Push to the Docker hub with <code>docker push $DOCKER_ACCOUNT_NAME/skt:v0.1</code> or use Docker desktop
+6. On Docker.io, verify that the image is listed. **NOTE**: You will want to set the repo to private, as the container contains your Stripe keys and other sensitive data. Consider switching to dynamic environment variables for a public repo
+7. Log into your server
+8. Make sure you have recent versions of Docker and nginx (or any other webserver that can act as a reverse proxy)
+9. Setup nginx as a reverse proxy for outside access, [tutorial](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-22-04), also a sample configuration file is provided in the <code>nginx</code> folder
+10. **TIP:** To avoid having to use sudo for Docker commands, add your user account to the <code>docker</code> group: <code>sudo usermod -aG docker $YOUR_USERNAME</code>
+11. Run <code>docker run -p 3000:3000 $DOCKER_ACCOUNT_NAME/skt:v0.1</code>
+12. Access your domain via a webbrowser
 
 ## Credits
 
