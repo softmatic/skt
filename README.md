@@ -110,7 +110,7 @@ SKT integrates Stripe's embedded checkout (see <code>$src/routes/(public)/(subsc
 
 In this scenario, webhooks are not required. However, it can be useful to capture additional Stripe subscription events via webhooks. Enable webhooks in the Stripe dashboard and select the events you are interested in. Make a note of the webhook's secret ("whsec...") and add it to <code>.env.local</code>. You will have to provide a publicly accessible URL as a destination. The webhook endpoint sits at <code>$src/routes/(admin)/webhooks/stripe</code>. When live on the web the destination URL would be example.com/webhooks/stripe. In development on localhost, you will need a service like ngrok to make this URL available to the outside.
 
-**Tip:** Use the [Stripe CLI](https://docs.stripe.com/stripe-cli#install) to generate events locally.
+**TIP:** Use the [Stripe CLI](https://docs.stripe.com/stripe-cli#install) to generate events locally.
 
 ## Run
 
