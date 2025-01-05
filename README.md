@@ -126,19 +126,19 @@ Then, in your browser, navigate to http://localhost:5173.
 
 Before going into production, make sure to change all references to localhost and test data to production values:
 
-1. Change Supabase > Authentication > URL Configuration accordingly
-2. Change Stripe PUBLIC_DOMAIN in .env, replace test API keys, webhook secrets and product / price IDs
+1. Change Supabase > Authentication > URL Configuration from localhost to your domain
+2. Change Stripe product / price IDs in <code>plans.ts</code> to production values
 3. Add domain to "Authorized JS origins" in Google Auth
 
 We assume deploying on a self-hosting platform, e.g. a server on the Hetzner cloud or with Digital Ocean:
 
-### Using PM2
+### Using pm2
 
 1. Log into your server
 2. Make sure you have recent versions of NodeJS, pm2 and nginx (or any other webserver that can act as a reverse proxy)
 3. Setup nginx as a reverse proxy for outside access, [tutorial](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-22-04), also a sample configuration file is provided in the <code>nginx</code> folder
 4. Clone the repo
-5. cd into the repo and create a file <code>.env</code> with the keys from <code>.env.local</code>, adjusted for production
+5. cd into the repo and create a file <code>.env</code> with the keys from <code>.env.local</code>, adjusted for production. You need to change PUBLIC_SUPABASE_REDIRECT_URL, PUBLIC_DOMAIN, Stripe API keys and webhook secret
 6. Run <code>npm run build</code>
 7. cd into the <code>build</code> folder and run <code>pm2 start index.js</code>
 8. Verify with <code>curl http://localhost:3000</code> that the server is running, check for errors with <code>pm2 log</code>
@@ -146,23 +146,26 @@ We assume deploying on a self-hosting platform, e.g. a server on the Hetzner clo
 
 ### Using Docker
 
-**NOTE**: This workflow requires a Docker account, we assume a repo named 'skt'
+**NOTE 1**: This workflow requires a Docker account, we assume a Docker repo named 'skt'
 
-1. On your development machine, cd into the repo and create a file <code>.env</code> with the keys from <code>.env.local</code>, adjusted for production
-2. run <code>npm run build</code>
-3. Log into your docker account and build the image with <code>docker build -t $DOCKER_ACCOUNT_NAME/skt:v0.1 .</code> (or any other tag name)
-4. Push to the Docker hub with <code>docker push $DOCKER_ACCOUNT_NAME/skt:v0.1</code> or use Docker desktop
-5. On Docker.io, verify that the image is listed. **NOTE**: You will want to set the repo to private, as the container contains your Stripe keys and other sensitive data. Consider switching to dynamic environment variables for a public repo, [tutorial](https://khromov.se/dockerizing-your-sveltekit-applications-a-practical-guide/)
-6. Log into your server
-7. Make sure you have recent versions of Docker and nginx (or any other webserver that can act as a reverse proxy)
-8. Setup nginx as a reverse proxy for outside access, [tutorial](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-22-04), also a sample configuration file is provided in the <code>nginx</code> folder
-9. **TIP:** To avoid having to use sudo for Docker commands, add your user account to the <code>docker</code> group: <code>sudo usermod -aG docker $YOUR_USERNAME</code>
-10. Run <code>docker run -p 3000:3000 $DOCKER_ACCOUNT_NAME/skt:v0.1</code>
-11. Access your domain via a webbrowser
+**NOTE 2**: The container created below contains your Supabase and Stripe keys. If you want to push the container to Docker hub, set your Docker repo to private or consider switching to [dynamic environment variables](https://khromov.se/dockerizing-your-sveltekit-applications-a-practical-guide/) for a public repo
+
+1. On your development machine, create a file <code>.env</code> with the keys from <code>.env.local</code>, adjusted for production. You need to change PUBLIC_SUPABASE_REDIRECT_URL, PUBLIC_DOMAIN, Stripe API keys and webhook secret
+2. Run <code>npm run build</code>
+3. Build the image with <code>docker build -t $YOUR_DOCKER_ACCOUNT_NAME/skt:v0.1 .</code> (or any other tag name)
+4. Log into your Docker account with <code>docker login -u $YOUR_DOCKER_ACCOUNT_NAME</code>
+5. Push to the Docker hub with <code>docker push $YOUR_DOCKER_ACCOUNT_NAME/skt:v0.1</code> or use Docker desktop
+6. Verify on [Docker Hub](https://hub.docker.com/) that the image is listed
+7. Log into your server
+8. Make sure you have recent versions of Docker and nginx (or any other webserver that can act as a reverse proxy)
+9. Setup nginx as a reverse proxy for outside access, [tutorial](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-22-04), also a sample configuration file is provided in the <code>nginx</code> folder
+10. **TIP:** To avoid having to use sudo for Docker commands, add your user account to the <code>docker</code> group: <code>sudo usermod -aG docker $YOUR_USERNAME</code>
+11. Run <code>docker run -p 3000:3000 $YOUR_DOCKER_ACCOUNT_NAME/skt:v0.1</code>
+12. Access your domain via a webbrowser
 
 #### Using Github Actions to build and push the Docker image
 
-A sample workflow is provided in <code>.github/worklows</code>. You will have to provide your docker username and a PAT (personal access token). Note that this workflow builds for arm64 as this is the architecture of the [Datada.sh](https://datada.sh) server. Also, the build action expects an .env file with all data filled in. Only use this action on a private repo or change to dynamic environment variables.
+A sample workflow is provided in <code>.github/workflows</code>. You will have to add your Docker username and a PAT ("personal access token", see [here](https://docs.docker.com/security/for-developers/access-tokens/)) to $YOUR_GITHUB_REPO > Settings > Security > Secrets > Actions > Repository Secrets. The build action requires the <code>.env</code> file in your Github repo, so setting this to private is recommended. Note that the workflow builds for arm64 as this is the architecture of the [Datada.sh](https://datada.sh) server. Change line 37 accordingly.
 
 ## Credits
 
