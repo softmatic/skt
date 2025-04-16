@@ -4,11 +4,9 @@ SKT ("SvelteKit Template") is a boilerplate for SaaS or web apps. The project is
 
 The project is divided in two main routes, public and private. The public route is the front facing part, ie. the content people see when they visit your website, example.com. The private route is only accessible to logged-in users and resides at example.com/app. This is where registered users can edit their profile, manage their subscription and access the actual app or SaaS. The boilerplate will only show a placeholder in lieu of the app.
 
-The boilerplate is used in these two projects:
+The boilerplate is used in this project:
 
-Unmodified: [DataDa.sh](https://datada.sh)
-
-Modified: [PDFTeam API](https://pdfteam.com)
+[PDFTeam API](https://pdfteam.com)
 
 ## Installation
 
